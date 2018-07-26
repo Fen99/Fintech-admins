@@ -39,7 +39,7 @@
 > local   all             postgres                                password  
 > #host    all             all             127.0.0.1/32           trust  
 > host    all             postgres        127.0.0.1/32            password  
-> # Our sample user  
+> #Our sample user  
 > host    shop_data       sample_user     127.0.0.1/32            md5  
 > host    shop_data       sample_user     0.0.0.0/0               md5    
 И перазапускам сервис
