@@ -4,12 +4,14 @@
 ```
 curl `curl https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz
 ```
-<html><body>You are being <a href="...">redirected</a>.</body></html> - перенаправление => достанем url из него и скачаем (NodeExporter аналогично):  
-```
-curl `curl https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> prometheus.tar.gz
-curl `curl https://github.com/prometheus/node_exporter/releases/download/v0.16.0/node_exporter-0.16.0.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> node_exporter.tar.gz
-curl `curl https://github.com/timonwong/uwsgi_exporter/releases/download/v0.7.0/uwsgi_exporter-0.7.0.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> uwsgi_exporter.tar.gz
-```
+
+```<html><body>You are being <a href="...">redirected</a>.</body></html> - перенаправление => достанем url из него и скачаем (NodeExporter аналогично):```
+
+```    
+curl `curl https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> prometheus.tar.gz  
+curl `curl https://github.com/prometheus/node_exporter/releases/download/v0.16.0/node_exporter-0.16.0.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> node_exporter.tar.gz  
+curl `curl https://github.com/timonwong/uwsgi_exporter/releases/download/v0.7.0/uwsgi_exporter-0.7.0.linux-amd64.tar.gz | grep -o -E 'href="https://.*?"' | sed -E 's/(href="|"$)//g' | sed -E 's/\&amp;/\&/g'` >> uwsgi_exporter.tar.gz  
+```  
 И распакуем (считаем, что скачано в одну директорию):  
 ```
 gzip -d *.gz
