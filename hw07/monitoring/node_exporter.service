@@ -1,0 +1,11 @@
+[Unit]
+Description=Node Exporter
+After=network-online.target
+
+[Service]
+User=prometheus
+Restart=on-failure
+ExecStart=/opt/monitoring/node_exporter/node_exporter
+
+[Install]
+WantedBy=monitoring.target

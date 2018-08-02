@@ -1,0 +1,6 @@
+[Unit]
+Description=Monitoring target (based on Prometheus)
+Requires=multi-user.target
+After=multi-user.target network-online.target
+Wants=prometheus.service node_exporter.service uwsgi_exporter.service
+AllowIsolate=yes

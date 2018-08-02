@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=node_exporter.service uwsgi_expoeter.service
+
+[Service]
+User=prometheus
+Restart=on-failure
+WorkingDirectory=/opt/monitoring/prometheus
+ExecStart=/opt/monitoring/prometheus/prometheus
+
+[Install]
+WantedBy=monitoring.target

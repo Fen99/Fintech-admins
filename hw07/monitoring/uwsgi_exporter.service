@@ -1,0 +1,15 @@
+[Unit]
+Description=uwsgi Exporter
+After=network-online.target
+Wants=uwsgi.service
+
+[Service]
+#Type=forking
+#PIDFile=/var/run/uwsgi_exporter.pid
+User=prometheus
+Restart=on-failure
+WorkingDirectory=/opt/monitoring/uwsgi_exporter
+ExecStart=/opt/monitoring/uwsgi_exporter/uwsgi_exporter --stats.uri=http://localhost:1717
+
+[Install]
+WantedBy=monitoring.target
