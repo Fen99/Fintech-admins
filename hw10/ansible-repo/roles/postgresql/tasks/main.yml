@@ -1,0 +1,6 @@
+---
+- name: Install Postges
+  import_tasks: install.yml
+
+- name: Configure Postgres
+  import_tasks: configure.yml

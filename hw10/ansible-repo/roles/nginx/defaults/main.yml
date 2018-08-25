@@ -1,0 +1,9 @@
+---
+nginx_user: nginx
+nginx_directory: /usr/local/nginx
+nginx_vhosts_folder: /etc/nginx/conf.d
+nginx_worker_connections: 200
+
+django_site_location: /opt/django/addressbook
+django_inner_port: 8000
+django_out_port: 80

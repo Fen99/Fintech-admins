@@ -1,0 +1,17 @@
+---
+- name: Install Nginx Server
+  yum:
+    name: "nginx"
+    state: present # default
+    update_cache: yes # yum update before launch
+
+- name: Create group
+  group:
+    name: "{{ nginx_user }}"
+    state: present
+
+- name: Create user
+  user:
+    name: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
+    state: present

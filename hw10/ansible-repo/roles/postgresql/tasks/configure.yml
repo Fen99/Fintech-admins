@@ -1,0 +1,50 @@
+---
+- name: get db exist status
+  stat:
+   path: "{{ postgres_data_dir }}/PG_VERSION"
+  register: pgdata
+
+- name: Init PostgreSQL if it hasn't been initialized yet
+  command: "sudo -u {{ postges_user }} bash -c 'initdb -D {{ postgres_data_dir }}'"
+  when: not pgdata.stat.exists
+
+- name: Put postgresql.conf
+  template:
+    src: postgresql.conf.j2
+    dest: "{{ postgres_data_dir }}/postgresql.conf"
+    owner: "{{ postgres_user }}"
+    group: "{{ postgres_user }}"
+    mode: 0600
+
+- name: Put pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgres_data_dir }}/pg_hba.conf"
+    owner: "{{ postgres_user }}"
+    group: "{{ postgres_user }}"
+    mode: 0600
+
+- name: Make changes in service file (due to port isn't default) - create dir
+  file:
+    path: /etc/systemd/system/postgresql.service.d
+    owner: root
+    group: root
+    mode: 0644
+    state: directory
+
+- name: Make changes in service file (due to port isn't default)
+  copy:
+    src: files/systemd/changes.conf
+    dest: /etc/systemd/system/postgresql.service.d
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Daemon reload systemd
+  command: systemctl daemon-reload
+
+- name: Enable and run postgres
+  service:
+    name: postgresql
+    state: started
+    enabled: true

@@ -1,0 +1,8 @@
+#! /usr/bin/env ansible-playbook
+---
+- name: Postresql - install and fill
+  hosts: webservers
+  become: true
+  roles:
+    - postgresql
+    - postgresql-fill
