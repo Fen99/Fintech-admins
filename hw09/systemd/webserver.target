@@ -1,0 +1,9 @@
+[Unit]
+Description=Webserver target
+Requires=multi-user.target
+After=multi-user.target network-online.target
+Wants=uwsgi@1.service uwsgi@2.service nginx.service
+AllowIsolate=yes
+
+[Install]
+WantedBy=multi-user.target
