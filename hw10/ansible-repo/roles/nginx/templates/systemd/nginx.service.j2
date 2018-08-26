@@ -6,7 +6,7 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 Type=forking
 ExecStartPre= {{ nginx_directory }}/sbin/nginx -t
 ExecStart={{ nginx_directory }}/sbin/nginx
-ExecReload={{ nginx_directory }}/nginx -s reload
+ExecReload={{ nginx_directory }}/sbin/nginx -s reload
 ExecStop=/bin/kill -s QUIT $MAINPID
 PrivateTmp=true
 
