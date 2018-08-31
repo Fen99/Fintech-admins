@@ -1,0 +1,4 @@
+---
+nginx_user: nginx
+postgres_postgres_password: "{{ vault_postgres_postgres_password }}"
+postgres_test_user_password: "{{ vault_postgres_test_user_password }}"

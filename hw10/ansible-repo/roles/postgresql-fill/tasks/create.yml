@@ -1,0 +1,40 @@
+---
+- name: Create test user
+  postgresql_user:
+    login_user: "{{ postgres_user }}"
+    login_password: "{{ postgres_postgres_password }}"
+    name: "{{ postgres_test_username }}"
+    port: "{{ postgres_port }}"
+
+- name: Create test database
+  postgresql_db:
+    login_user: "{{ postgres_user }}"
+    login_password: "{{ postgres_postgres_password }}"
+    name: "{{ postgres_test_db }}"
+    port: "{{ postgres_port }}"
+    owner: "{{ postgres_test_username }}"
+
+- name: Add grants
+  postgresql_privs:
+    login_user: "{{ postgres_user }}"
+    login_password: "{{ postgres_postgres_password }}"
+    port: "{{ postgres_port }}"
+    database: "{{ postgres_test_db }}"
+    grant_option: yes
+    privs: ALL
+    type: database
+    role: "{{ postgres_test_username }}"
+
+- name: Add to pg_hba.conf data for connection
+  blockinfile:
+    path: "{{ postgres_data_dir }}/pg_hba.conf"
+    block: |
+      ##########################################################
+      ## Block from postgresql-fill ansible role
+      ##########################################################
+      host    {{ postgres_test_db }}     {{ postgres_test_username }}          127.0.0.1/32               md5
+      host    {{ postgres_test_db }}     {{ postgres_test_username }}          0.0.0.0/0               md5
+  notify: Reload postgres
+
+- name: Notify reload pgsql
+  meta: flush_handlers

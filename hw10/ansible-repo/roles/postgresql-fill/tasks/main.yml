@@ -1,0 +1,16 @@
+---
+- name: Create management user
+  postgresql_user:
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_postgres_password }}"
+    port: "{{ postgres_port }}"
+
+- name: Prevent trust connect
+  shell: "/bin/sed -i '/^local/s/trust/md5/' {{ postgres_data_dir}}/pg_hba.conf"
+  notify: Reload postgres
+
+- name: Notify reload pgsql
+  meta: flush_handlers
+
+- name: Create test user and database
+  import_tasks: create.yml

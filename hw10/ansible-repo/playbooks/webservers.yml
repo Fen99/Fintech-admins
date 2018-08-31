@@ -1,0 +1,7 @@
+#! /usr/bin/env ansible-playbook
+---
+- name: Install nginx
+  hosts: webservers
+  become: true
+  roles:
+    - nginx

@@ -1,0 +1,27 @@
+---
+- name: Install Postgres Server
+  yum:
+    name: "postgresql-server"
+    state: present # default
+    update_cache: yes # yum update before launch
+
+- name: Install Pip
+  yum:
+    name: "python-pip"
+    state: present # default
+    update_cache: yes # yum update before launch
+
+- name: Install psycopg2
+  pip:
+    name: psycopg2
+
+- name: Create group
+  group:
+    name: "{{ postgres_user }}"
+    state: present
+
+- name: Create user
+  user:
+    name: "{{ postgres_user }}"
+    group: "{{ postgres_user }}"
+    state: present
